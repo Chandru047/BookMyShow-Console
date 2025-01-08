@@ -103,60 +103,82 @@ public class AdminActions
                 return;
             }
 
-            System.out.println("Enter the date of the Movie : ");
+            System.out.println("Enter the date of the Movie (dd-MM-yyyy) : ");
             LocalDate date = LocalDate.parse(in.nextLine(), BookMyShow_POJO.getDateFormatter()); // get the date to screen the movie
 
-            System.out.print("Enter the Duration of the movie : ");
+            System.out.print("Enter the Duration of the movie (in minutes) : ");
             long duration = Long.parseLong(in.nextLine()); // get the duration of the movie
 
+            // Display theatres in the given location
+            System.out.println("Available Theatres:");
             for(String theatres:BookMyShow_POJO.getTheatreNameObj().keySet()) // for loop to go through the TheatreObj
             {
                 if(BookMyShow_POJO.getTheatreNameObj().get(theatres).getTheatreLocation().equals(location)) // match the location
                 {
-                    System.out.println("* "+ theatres); // print all the theatres in that location
+                    System.out.println(theatres); // print all the theatres in that location
                 }
             }
 
             System.out.println("Enter the Theatre name : ");
             String theatreName = in.nextLine(); // get the name of the theatre to screen the movie
-
+            boolean exist = false;
+            for (var name : BookMyShow_POJO.getTheatreNameObj().keySet())
+            {
+                if (BookMyShow_POJO.getTheatreNameObj().get(name).getTheatreName().equals(theatreName))
+                {
+                    exist = true ;
+                }
+            }
+            if (!exist)
+            {
+                System.out.println("Enter a valid Theatre !!");
+                continue;
+            }
             Theatre_POJO theatres = BookMyShow_POJO.getTheatreNameObj().get(theatreName); // get the object of the chosen theatre
+
             System.out.println("Available Screens..");
             for(String screens : theatres.getScreenNameObj().keySet()) // for loop to go through all the screens in the theatre
             {
-                System.out.println(screens);
+                System.out.println(screens); // print all the Screens
             }
-            ScreenPOJO screen = null;
-            System.out.print("Enter the screen name : ");
-            String screenName = in.nextLine();
+            ScreenPOJO screen = null; // initialize the screen variable of type ScreenPojo as null
+            System.out.print("Enter the name of the Screen : ");
+            String screenName = in.nextLine(); // get the name of the screen as input
 
 
-            for(String screens : theatres.getScreenNameObj().keySet())
+            for(String screens : theatres.getScreenNameObj().keySet()) // go through all the Screen
             {
-                if(screens.equals(screenName))
+                if(screens.equals(screenName)) // if the Screen name matches then store the object in the screen variable
                 {
                      screen = theatres.getScreenNameObj().get(screens);
+                     break;
                 }
             }
 
-            System.out.print("Enter the start time of the Show : ");
-            LocalTime startTime = LocalTime.parse(in.nextLine(),BookMyShow_POJO.getTimeFormatter());
-            LocalTime endTime = startTime.plusMinutes(duration + 30);
-
-            Show_POJO Show = new Show_POJO(startTime,endTime,date,movieName);
-            screen.getShows().add(Show);
-            Movie currentMovie = new Movie(movieName,location,date,duration,theatres,screen,Show);
-
-            var movieList = BookMyShow_POJO.getMovieNameObj().get(movieName);
-            if(movieList==null)
+            if (screen == null) // if the screen is null then the screen is not visible
             {
-                movieList = new ArrayList<>();
+                System.out.println("Invalid screen name!");
+                continue; // go back to the top of the loop
             }
-            for(Movie obj : movieList)
+
+            System.out.print("Enter the start time of the Show : ");
+            LocalTime startTime = LocalTime.parse(in.nextLine(),BookMyShow_POJO.getTimeFormatter()); // get the start time of the movie from the admin
+            LocalTime endTime = startTime.plusMinutes(duration + 30); // calculate the end time
+
+            Show_POJO Show = new Show_POJO(startTime,endTime,date,movieName); // create a new Screen object and pass the details of the screen
+            screen.getShows().add(Show); // add the show to the show arrayList in the Screen
+            Movie currentMovie = new Movie(movieName,location,date,duration,theatres,screen,Show); // create a new Movie object and pass the details
+
+            var movieList = BookMyShow_POJO.getMovieNameObj().get(movieName); // get the object of the movie
+            if(movieList==null) // if null then there is no movies available
+            {
+                movieList = new ArrayList<>(); // Initialize the movieList arrayList to avoid null pointer exception
+            }
+            for(Movie obj : movieList) //
             {
                 if(obj.getStartDate().isEqual(date) && obj.getDuration()==duration && obj.getLocation().equals(location) && obj.getTheatre().getTheatreName().equals(theatreName) && obj.getScreen().getScreenName().equals(screenName) && (startTime.isBefore(obj.getShow().getStartTime()) || startTime.isAfter(obj.getShow().getEndTime())) && (endTime.isBefore(obj.getShow().getStartTime()) || endTime.isAfter(obj.getShow().getEndTime())))
                 {
-                    System.out.println("Movie already exists..");
+                    System.out.println("Movie already exists at the selected time and screen.");
                     return;
                 }
             }
@@ -174,19 +196,25 @@ public class AdminActions
 
     static void viewMovies()
     {
-        var movie = BookMyShow_POJO.getMovieNameObj().keySet();
-        for(var movies:movie)
+        if(BookMyShow_POJO.getMovieNameObj().isEmpty()) // Go through all the movie object
         {
-            System.out.println("Movie Name : "+movies);
-            var availableMovies = BookMyShow_POJO.getMovieNameObj().get(movies);
-            for(Movie movieObj : availableMovies)
+            System.out.println("No Movies Available ....");
+            return; // if no movie is available then exit the method
+        }
+
+        var movie = BookMyShow_POJO.getMovieNameObj().keySet(); // get all the keySet of the Movie Hashmap
+        for(var movies:movie) // go through all the KeySet
+        {
+            System.out.println("Movie : "+movies); // print the name of the movie
+            var availableMovies = BookMyShow_POJO.getMovieNameObj().get(movies);  // get the list of Movie objects for the given movie name
+            for(Movie movieObj : availableMovies) // Iterate over the list of Movie objects
             {
                 System.out.println("---------------------");
-                System.out.println("Theatre : " + movieObj.getTheatre().getTheatreName());
-                System.out.println("Location : " + movieObj.getLocation());
-                System.out.println("Date : " + movieObj.getStartDate().format(BookMyShow_POJO.getDateFormatter()));
-                System.out.println("Show Start Time : " + movieObj.getShow().getStartTime().format(BookMyShow_POJO.getTimeFormatter()));
-                System.out.println("Show End Time : " + movieObj.getShow().getEndTime().format(BookMyShow_POJO.getTimeFormatter()));
+                System.out.println("  - Theatre : " + movieObj.getTheatre().getTheatreName()); // print the name of the theatre
+                System.out.println("  - Location : " + movieObj.getLocation()); // print the location of the theatre
+                System.out.println("  - Date : " + movieObj.getStartDate().format(BookMyShow_POJO.getDateFormatter())); // print the date of the movie
+                System.out.println("  - Start Time : " + movieObj.getShow().getStartTime().format(BookMyShow_POJO.getTimeFormatter())); // print the start time of the movie
+                System.out.println("  - End Time : " + movieObj.getShow().getEndTime().format(BookMyShow_POJO.getTimeFormatter())); // print the end time of  the movie
                 System.out.println("---------------------");
             }
         }
@@ -204,14 +232,14 @@ public class AdminActions
             if (theatre.getTheatreName().equals(theatreName) && theatre.getTheatreLocation().equals(location)) // if condition to check if the theatre already exist in that location
             {
                 System.out.println("Theatres  already exists in the location !");
-                return;
+                return; // if the theatre already exist then exit from the method
             }
         }
 
 
         System.out.println("Enter the  Screen count :");
         int screenCount = Integer.parseInt(in.nextLine()); // get the number of screens as input
-        HashMap<String,ScreenPOJO> screensHashMap = new HashMap<>();
+        HashMap<String,ScreenPOJO> screensHashMap = new HashMap<>(); // HashMap with Name of the Screen as Key , ScreenPojo
         while (screenCount != 0) // while loop to get the details of all the available screens
         {
             System.out.println("Enter the name of the Screen ");
@@ -239,14 +267,16 @@ public class AdminActions
         {
             // Display theatre details
             System.out.println("Name : " + theatre); // get the theatre name
+            System.out.println("-------------------------------------------------");
             var theatres = BookMyShow_POJO.getTheatreNameObj().get(theatre); // get the object stored in the theatre name key
             System.out.println("Location : " + theatres.getTheatreLocation()); // print the location
 
             // Display available screens in the theatre
             System.out.println("Available Screens ...");
 
-            for (ScreenPOJO screenPOJO : theatres.getScreen()) // for loop to get all the screen details
+            for (String screenName : theatres.getScreenNameObj().keySet()) // for loop to get all the screen details
             {
+                ScreenPOJO screenPOJO = theatres.getScreenNameObj().get(screenName);
                 System.out.println("Name of Screen : " + screenPOJO.getScreenName()); // get the name of the screen
                 System.out.println("No of Seats : " + screenPOJO.getNoOfSeats()); // get the number of seats
                 System.out.println("Seat Layout --> " + screenPOJO.getSeatingArrangement()); // get the seating arrangement
