@@ -1,7 +1,7 @@
 import java.time.LocalDate;
 
 public class Movie {
-    private final Show_POJO show;
+    private  Show_POJO show;
     private ScreenPOJO screen;
     private Theatre_POJO theatre;
     private long duration;
@@ -18,6 +18,11 @@ public class Movie {
         this.theatre = theatres;
         this.screen = screen;
         this.show = show;
+    }
+
+    public Movie()
+    {
+
     }
 
     public String getMovieName() {

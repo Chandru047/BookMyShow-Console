@@ -17,10 +17,6 @@ public class Theatre_POJO
         this.location = location;
     }
 
-    public Theatre_POJO() {
-
-    }
-
 
     public String getTheatreName()
     {

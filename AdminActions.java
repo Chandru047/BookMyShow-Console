@@ -6,12 +6,12 @@ import java.util.Scanner;
 
 public class AdminActions
 {
-    static Scanner in = new Scanner(System.in);
+    static Scanner in = new Scanner(System.in); //static Scanner
     Admin_POJO login(Scanner in, String id)
     {
-        while (true)
+        while (true) // infinite loop for admin Login
         {
-            int index = -1;
+            int index = -1; // set a default value for the index variable
 
             // for loop to check if the user already exist
             for (int i = 0; i < BookMyShow_POJO.getAdminList().size(); i++)
@@ -27,15 +27,15 @@ public class AdminActions
             if (index != -1) // if the index remains unchanged it means the user already exist
             {
                 System.out.println("Enter the password: ");
-                String password = in.nextLine();
+                String password = in.nextLine(); // get the password as an input
 
                 if (BookMyShow_POJO.getAdminList().get(index).getPass().equals(password)) // if the password matches then get to admin operations
                 {
                     System.out.println("Login successful!");
-                    BookMyShow.adminOptions();
-                    return BookMyShow_POJO.getAdminList().get(index);
+                    BookMyShow.adminOptions(); // if condition true then call adminOptions
+                    return BookMyShow_POJO.getAdminList().get(index); // return the admin object
                 }
-                else
+                else // if the condition is false then return null
                 {
                     System.out.println("Invalid password. Try again.");
                     return null;
@@ -45,36 +45,36 @@ public class AdminActions
             else // if id does not exist then procedure to create a new admin account
             {
                 System.out.println("ID does not exist. Creating a new account...");
-                int enteredPin = 0;
-                try
+                int enteredPin = 0; // set a initial value for the enteredPin variable
+                try // add a try block to handle exceptions
                 {
-                    System.out.println("Enter the pin: ");
+                    System.out.println("Enter the pin: "); // get the pin as an input
                     enteredPin = Integer.parseInt(in.nextLine());
                 }
-                catch (NumberFormatException e)
+                catch (NumberFormatException e) // if an exception occur then catch it and return null
                 {
                     System.out.println("Invalid Input. Please enter a Numeric value");
                     return null;
                 }
 
 
-                if (enteredPin != Admin_POJO.getPIN())
+                if (enteredPin != Admin_POJO.getPIN()) // if the pin does not match then return null
                 {
                     System.out.println("Incorrect pin. Account creation failed.");
                     return null;
                 }
 
 
-                Admin_POJO admin = new Admin_POJO();
-                admin.setId(id);
+                Admin_POJO admin = new Admin_POJO(); // create a new object for Admin_POJO
+                admin.setId(id); // set the id to the object
                 System.out.println("Enter the new password: ");
-                String newPassword = in.nextLine();
-                admin.setPass(newPassword);
+                String newPassword = in.nextLine(); // store the password
+                admin.setPass(newPassword); // set the password to the object
 
-                BookMyShow_POJO.getAdminList().add(admin);
+                BookMyShow_POJO.getAdminList().add(admin); // add the object to teh arrayList in BookMyShowPojo
 
                 System.out.println("Account created successfully!");
-                return admin;
+                return admin; // return the admin object
             }
         }
     }
@@ -90,17 +90,17 @@ public class AdminActions
             boolean available = false ; // initialize a boolean value to check if location available
             for (String theatrePojo : BookMyShow_POJO.getTheatreNameObj().keySet()) // for loop to check if any theatre exist in the location
             {
-                if (BookMyShow_POJO.getTheatreNameObj().get(theatrePojo).getTheatreLocation().equals(location)) // if the location already exists in theatre then change available to true
+                if (BookMyShow_POJO.getTheatreNameObj().get(theatrePojo).getTheatreLocation().equals(location)) // check  if the location already exists in theatre
                 {
-                    available = true ;
-                    break ;
+                    available = true ; // change available to true
+                    break ; // break the for loop
                 }
 
             }
             if (!available) // if no theatre is available in that location then exit out of addMovie logic
             {
                 System.out.println("------------------ No Theatres Available in your Current Location --------------------");
-                return;
+                return; // get out of the method
             }
 
             System.out.println("Enter the date of the Movie (dd-MM-yyyy) : ");
@@ -108,6 +108,9 @@ public class AdminActions
 
             System.out.print("Enter the Duration of the movie (in minutes) : ");
             long duration = Long.parseLong(in.nextLine()); // get the duration of the movie
+
+            System.out.println("Enter the price of a single ticket");
+            long price = Integer.parseInt(in.nextLine());
 
             // Display theatres in the given location
             System.out.println("Available Theatres:");
@@ -121,18 +124,18 @@ public class AdminActions
 
             System.out.println("Enter the Theatre name : ");
             String theatreName = in.nextLine(); // get the name of the theatre to screen the movie
-            boolean exist = false;
-            for (var name : BookMyShow_POJO.getTheatreNameObj().keySet())
+            boolean exist = false; // set the initial value as false for exist variable
+            for (var name : BookMyShow_POJO.getTheatreNameObj().keySet()) // iterate through the Theatre Hashmap (KeySet)
             {
-                if (BookMyShow_POJO.getTheatreNameObj().get(name).getTheatreName().equals(theatreName))
+                if (BookMyShow_POJO.getTheatreNameObj().get(name).getTheatreName().equals(theatreName)) // if the entered theatre exists
                 {
-                    exist = true ;
+                    exist = true ; // set the exist variable to true
                 }
             }
-            if (!exist)
+            if (!exist) // if the theatre does not exist
             {
                 System.out.println("Enter a valid Theatre !!");
-                continue;
+                continue; // start from the beginning of the while Loop
             }
             Theatre_POJO theatres = BookMyShow_POJO.getTheatreNameObj().get(theatreName); // get the object of the chosen theatre
 
@@ -148,10 +151,10 @@ public class AdminActions
 
             for(String screens : theatres.getScreenNameObj().keySet()) // go through all the Screen
             {
-                if(screens.equals(screenName)) // if the Screen name matches then store the object in the screen variable
+                if(screens.equals(screenName)) // if the Screen name matches
                 {
-                     screen = theatres.getScreenNameObj().get(screens);
-                     break;
+                     screen = theatres.getScreenNameObj().get(screens); // store the object in the screen variable
+                     break; // break the for loop
                 }
             }
 
@@ -164,9 +167,21 @@ public class AdminActions
             System.out.print("Enter the start time of the Show : ");
             LocalTime startTime = LocalTime.parse(in.nextLine(),BookMyShow_POJO.getTimeFormatter()); // get the start time of the movie from the admin
             LocalTime endTime = startTime.plusMinutes(duration + 30); // calculate the end time
-
-            Show_POJO Show = new Show_POJO(startTime,endTime,date,movieName); // create a new Screen object and pass the details of the screen
-            screen.getShows().add(Show); // add the show to the show arrayList in the Screen
+            for (var show : screen.getShows()) // get through the shows
+            {
+                if (startTime.isBefore(show.getStartTime()) || endTime.isBefore(show.getEndTime()) && (startTime.isAfter(show.getEndTime()) || endTime.isAfter(show.getEndTime())) && date.isEqual(show.getDate()))
+                {
+                    System.out.println("Show already exist ");
+                    return; // exit out of the method
+                }
+            }
+            Show_POJO Show = new Show_POJO(startTime,endTime,date,screen,price); // create a new Screen object and pass the details of the screen
+            if(screen.getShows().contains(Show)) // if the show already exist
+            {
+                System.out.println("The provided show already exist");
+                return; // exit out of the method
+            }
+            screen.getShows().add(Show); // add the show to the show HashMap in the Screen
             Movie currentMovie = new Movie(movieName,location,date,duration,theatres,screen,Show); // create a new Movie object and pass the details
 
             var movieList = BookMyShow_POJO.getMovieNameObj().get(movieName); // get the object of the movie
@@ -174,24 +189,13 @@ public class AdminActions
             {
                 movieList = new ArrayList<>(); // Initialize the movieList arrayList to avoid null pointer exception
             }
-            for(Movie obj : movieList) //
-            {
-                if(obj.getStartDate().isEqual(date) && obj.getDuration()==duration && obj.getLocation().equals(location) && obj.getTheatre().getTheatreName().equals(theatreName) && obj.getScreen().getScreenName().equals(screenName) && (startTime.isBefore(obj.getShow().getStartTime()) || startTime.isAfter(obj.getShow().getEndTime())) && (endTime.isBefore(obj.getShow().getStartTime()) || endTime.isAfter(obj.getShow().getEndTime())))
-                {
-                    System.out.println("Movie already exists at the selected time and screen.");
-                    return;
-                }
-            }
 
 
-            movieList.add(currentMovie);
-            BookMyShow_POJO.getMovieNameObj().put(movieName,movieList);
+            movieList.add(currentMovie); // add the movie to the movieList(ArrayList)
+            BookMyShow_POJO.getMovieNameObj().put(movieName,movieList); // set the theatre name as key and the arraylist of object as value
             System.out.println("Movie added successfully ");
-            break ;
+            break ; // break the while loop
         }
-
-
-
     }
 
     static void viewMovies()
@@ -249,6 +253,10 @@ public class AdminActions
             System.out.println("Enter the Screen Grid (eg:2*8*2)");
             String screenGrid = in.nextLine(); // get the grid layout as an input
             var grid = Utilities.generateSeatingPatterns(numberSeats, screenGrid); // get the seating arrangement form generateSeatingPatterns method in Utilities class
+            if (grid == null) // if the grid is not created successfully then start the while loop again
+            {
+                continue;
+            }
             ScreenPOJO screenPOJO = (new ScreenPOJO(screenName, numberSeats, grid)); // create a new screen object and store all the details
             screensHashMap.put(screenName , screenPOJO); // add it to the Hashmap
             screenCount--; // Decrement to iterate through the Screens
@@ -279,7 +287,11 @@ public class AdminActions
                 ScreenPOJO screenPOJO = theatres.getScreenNameObj().get(screenName);
                 System.out.println("Name of Screen : " + screenPOJO.getScreenName()); // get the name of the screen
                 System.out.println("No of Seats : " + screenPOJO.getNoOfSeats()); // get the number of seats
-                System.out.println("Seat Layout --> " + screenPOJO.getSeatingArrangement()); // get the seating arrangement
+                System.out.println("Seat Layout : ");
+                for(var seats:screenPOJO.getSeatingArrangement().keySet())
+                {
+                    System.out.println(seats + " " + screenPOJO.getSeatingArrangement().get(seats));
+                }// get the seating arrangement
                 System.out.println();
             }
             System.out.println("-----------------------------------------------");

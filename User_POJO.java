@@ -1,9 +1,14 @@
+import java.time.LocalDate;
+import java.util.ArrayList;
+
 public class User_POJO
 {
     private String id ;
     private String pass;
     private String name;
     private String location;
+    private LocalDate date;
+    private ArrayList<Tickets> ticket = new ArrayList<>();
 
 
 
@@ -50,6 +55,20 @@ public class User_POJO
     }
 
 
+    public void setPreferredDate(LocalDate parsedDate)
+    {
+        this.date = parsedDate;
+    }
 
+    public LocalDate getDate() {
+        return date;
+    }
 
+    public ArrayList<Tickets> getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(ArrayList<Tickets> ticket) {
+        this.ticket = ticket;
+    }
 }

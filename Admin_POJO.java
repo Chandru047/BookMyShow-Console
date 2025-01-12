@@ -1,8 +1,11 @@
 public class Admin_POJO
 {
-    private static final double PIN = 1920;
-    private String id ;
-    private String pass;
+    private static final double PIN = 1920; // pin to verify the admin
+    private String id ; // String variable to store the id of the admin
+    private String pass; // String variable to store the pass of the admin
+
+    // Getters and Setters
+
 
     static double getPIN()
     {

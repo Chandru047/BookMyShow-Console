@@ -33,20 +33,20 @@ public class BookMyShow
                 System.out.println("Exiting.........");
                 break;
             }
-//            else
-//            {
-//                UserActions userActions = new UserActions();
-//                User_POJO user = userActions.login(in, input);
-//
-//                if (user != null)
-//                {
-//                    userOptions(user);
-//                }
-//                else
-//                {
-//                    UserActions.register(in, input);
-//                }
-//            }
+            else
+            {
+                UserActions userActions = new UserActions();
+                User_POJO user = userActions.login(in, input);
+
+                if (user != null)
+                {
+                    userOptions(user);
+                }
+                else
+                {
+                    UserActions.register(in, input);
+                }
+            }
 
         }
 
@@ -81,26 +81,29 @@ public class BookMyShow
 
    }
 
-//    static void userOptions(User_POJO user)
-//    {
-//        loop :while (true)
-//        {
-//            UserActions.availableMovies(user);
-//            System.out.println("Enter your choice: \n1.Display Movie \n2.Change Location \n3.Exit");
-//            String choice = in.nextLine().trim();
-//            switch (choice)
-//            {
-//                case "1":
-//                    UserActions.displayMovie(user);
-//                    break;
-//                case "2":
-//                    UserActions.changeLocation(user);
-//                    break;
-//                case "3":
-//                    break loop;
-//
-//            }
-//        }
-//
-//    }
+    static void userOptions(User_POJO user)
+    {
+        UserActions.availableMovies(user);
+        loop :while (true)
+        {
+            System.out.println("Enter your choice: \n1.Display Movie \n2.Change Location or Date \n3.view Ticket \n4.Exit");
+            String choice = in.nextLine().trim();
+            switch (choice)
+            {
+                case "1":
+                    UserActions.availableMovies(user);
+                    break;
+                case "2":
+                    UserActions.changeLocationOrDate(user);
+                    break;
+                case "3":
+                    UserActions.viewTicket(user);
+                    break;
+                case "4":
+                    break loop;
+
+            }
+        }
+
+    }
 }
