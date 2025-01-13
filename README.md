@@ -6,6 +6,17 @@
 
 > A comprehensive Java project for theater management and booking operations, built for deep understanding of Java concepts and OOP principles.
 
+## 📑 Table of Contents
+- [Project Purpose](#-project-purpose)
+- [Project Structure](#-project-structure)
+- [System Architecture](#%EF%B8%8F-system-architecture)
+- [Features](#-key-features)
+- [Getting Started](#-getting-started)
+- [Technical Stack](#%EF%B8%8F-technical-stack)
+- [Learning Outcomes](#-learning-outcomes)
+- [Contributing](#-contributing)
+- [License](#-license)
+
 ## 🎯 Project Purpose
 
 This educational project demonstrates advanced Java programming concepts through a real-world application. Perfect for developers looking to master:
@@ -36,10 +47,23 @@ BookMyShow-Console-main/
 │   ├── User_POJO
 │   ├── UserActions
 │   └── Utilities
-└── BookMyShow-Console-main.iml
 ```
 
-## 🏛️ Architecture
+## 🏗️ System Architecture
+
+Below is the detailed architectural diagram of the system showing the relationships between different components:
+
+![System Architecture](architecture.png)
+
+🔗 [View Diagram in Excalidraw](https://excalidraw.com/#json=nuZT4p1iXuVKm7HWg9syD,8N6-eBL4gKJRHKKZWdDaqQ)
+
+*The architecture diagram shows the following key components:*
+- BookMyShow Actions and POJO classes
+- Admin and Customer action flows
+- Theater, Screen, and Show management
+- Utility components for supporting operations
+
+## 📦 Components
 
 ### Core Components
 
@@ -78,6 +102,36 @@ BookMyShow-Console-main/
 - Dynamic seating layouts
 - Schedule optimization
 - Movie programming
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Java JDK 8 or higher
+- IDE (IntelliJ IDEA recommended)
+- Git
+
+### Installation
+
+1. Clone the repository
+```bash
+git clone https://github.com/yourusername/BookMyShow-Console-main.git
+```
+
+2. Open the project in IntelliJ IDEA
+```bash
+cd BookMyShow-Console-main
+```
+
+3. Build the project
+```bash
+javac Main.java
+```
+
+4. Run the application
+```bash
+java Main
+```
+
 
 ## 🛠️ Technical Stack
 
@@ -126,6 +180,24 @@ Contributions are what make the open source community an amazing place to learn,
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
+## 📝 Code Style Guidelines
+
+Please follow these guidelines when contributing:
+- Use meaningful variable and method names
+- Add comments for complex logic
+- Follow Java naming conventions
+- Include unit tests for new features
+- Update documentation for significant changes
+
+## 🐛 Bug Reports
+
+If you find a bug, please create an issue with:
+1. Bug description
+2. Steps to reproduce
+3. Expected behavior
+4. Screenshots (if applicable)
+5. Environment details
+
 ## 🎓 Educational Value
 
 This project serves as a practical example of:
@@ -135,10 +207,23 @@ This project serves as a practical example of:
 - Performance optimization
 - Security implementation
 
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Java programming community
+- Open source contributors
+- IntelliJ IDEA for the IDE
+- All project contributors
+
 ---
 
 <div align="center">
 
 Made with ❤️ for Java enthusiasts
+
+[Report Bug](https://github.com/yourusername/BookMyShow-Console-main/issues) · [Request Feature](https://github.com/yourusername/BookMyShow-Console-main/issues)
 
 </div>
