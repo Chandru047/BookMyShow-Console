@@ -4,10 +4,12 @@ import java.util.HashSet;
 
 public class ScreenPOJO
 {
-    private String screenName;
-    private long noOfSeats;
-    private HashMap<Character , ArrayList<String>> seatingArrangement = new HashMap<>();
-    private HashSet<Show_POJO> shows = new HashSet<>();
+    private String screenName; // variable to store the name of the screen
+    private long noOfSeats;// variable to store the no of seats
+    private HashMap<Character , ArrayList<String>> seatingArrangement ; // Hashmap to store the seating Arrangement
+    private HashSet<Show_POJO> shows = new HashSet<>(); // Hashset to store the show objects
+
+    //Constructor
     ScreenPOJO(String screenName , long noOfSeats , HashMap<Character , ArrayList<String>> seatingArrangement)
     {
         this.screenName = screenName ;
@@ -15,6 +17,8 @@ public class ScreenPOJO
         this.seatingArrangement = seatingArrangement;
 
     }
+
+    //Getters and Setters
 
     String getScreenName()
     {

@@ -3,20 +3,19 @@ import java.util.HashMap;
 
 public class Theatre_POJO
 {
-    private String theatreName;
-    private String location;
-    private ArrayList<ScreenPOJO> screen = new ArrayList<>();
-    private HashMap<String , ScreenPOJO > screenNameObj= new HashMap<>();
-    private ArrayList <Movie> movie = new ArrayList<>();
+    private String theatreName;// String variable to store the theatre Name
+    private String location;// String variable to store the theatre location
+    private HashMap<String , ScreenPOJO > screenNameObj; // //Hashmap to store the screen name and its object
 
+    //Constructor
     public Theatre_POJO(String name, HashMap<String,ScreenPOJO> screenNameAndObject, String location)
     {
         this.theatreName = name;
         this.screenNameObj = screenNameAndObject;
-        //this.movies = movies;
         this.location = location;
     }
 
+    //Getters and setters
 
     public String getTheatreName()
     {
@@ -36,22 +35,6 @@ public class Theatre_POJO
     public void setTheatreLocation(String location)
     {
         this.location = location;
-    }
-
-    public ArrayList<ScreenPOJO> getScreen() {
-        return screen;
-    }
-
-    public void setScreen(ArrayList<ScreenPOJO> screen) {
-        this.screen = screen;
-    }
-
-    public ArrayList<Movie> getMovie() {
-        return movie;
-    }
-
-    public void setMovie(ArrayList<Movie> movie) {
-        this.movie = movie;
     }
 
     public HashMap<String,ScreenPOJO> getScreenNameObj() {

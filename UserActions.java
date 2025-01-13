@@ -8,115 +8,114 @@ import java.util.Scanner;
 public class UserActions
 {
     static Scanner in = new Scanner(System.in);
+    // method to register the user
     static void register(Scanner in, String id)
     {
-        User_POJO user = new User_POJO();
-        user.setId(id);
+        User_POJO user = new User_POJO(); // create an user object
+        user.setId(id); // set the id in the object
         System.out.println("Enter the Password:");
-        String password = in.nextLine();
-        user.setPass(password);
+        String password = in.nextLine();//get the pass as an input
+        user.setPass(password); // set the pass in the object
         System.out.println("Enter your Name:(Default : " + id + ")");
-        String name = in.nextLine();
-        if (name.isEmpty())
+        String name = in.nextLine();// get the name as an input
+        if (name.isEmpty()) // if the name is empty
         {
-            user.setname(id);
+            user.setname(id); // set the id as the name
         }
         else
         {
-            user.setname(name);
+            user.setname(name); // set the name in the object
         }
         System.out.println("Enter your Location:");
-        String location = in.nextLine();
-        user.setLocation(location);
+        String location = in.nextLine(); // get the location as an input
+        user.setLocation(location); // set the location in the object
         System.out.println("Account Created Successfully");
-        BookMyShow_POJO.getUserList().add(user);
+        BookMyShow_POJO.getUserList().add(user); // add the user to the arrayList
 
     }
-
+    // method used for user login
     User_POJO login(Scanner in, String id)
     {
-        for (int i = 0; i < BookMyShow_POJO.getUserList().size(); i++)
+        for (User_POJO user : BookMyShow_POJO.getUserList()) // iterate through the user objects
         {
-            if (BookMyShow_POJO.getUserList().get(i).getId().equals(id))
+            if (user.getId().equals(id)) // if the id matches
             {
                 System.out.println("Enter the password:");
-                String password = in.nextLine();
-                if (BookMyShow_POJO.getUserList().get(i).getPass().equals(password))
+                String password = in.nextLine(); // get the password as input
+                if (user.getPass().equals(password)) // if the password matches
                 {
                     System.out.println("Login successful!");
-                    return BookMyShow_POJO.getUserList().get(i);
+                    return user; // return the user object
                 }
-                else
+                else // if pass does not match
                 {
                     System.out.println("Invalid password. Try again.");
-                    return null;
+                    return null; // return null
                 }
             }
         }
 
         System.out.println("User does not exist. Creating a new account...");
-        return null;
+        return null; // if user does not exist return null
     }
 
-
-static void availableMovies(User_POJO currentUser)
+// method to display available movies
+static void availableMovies(User_POJO currentUser )
 {
-    ArrayList<Movie> moviess = new ArrayList<>();
+    ArrayList<Movie> moviess = new ArrayList<>(); // create a arrayList of Movies
     System.out.println("-------------------------------");
-    LocalDate currentDate;
-        // Assuming the user's location
-    if (currentUser.getDate() == null)
-    {
-        currentDate = LocalDate.now();
-    }
-    else
-    {
-        currentDate = currentUser.getDate();
-    }
-    String location = currentUser.getLocation();
+
+    LocalDate currentDate = LocalDate.now(); // set the current date
+
+
+    String location = currentUser.getLocation(); //get the current user location and store it in location variable
 
     System.out.println("Movies Currently available in your Location: " + location);
 
-    for (String movieName : BookMyShow_POJO.getMovieNameObj().keySet())
+    for (String movieName : BookMyShow_POJO.getMovieNameObj().keySet()) // for loop to go through the theatre object
     {
-        ArrayList<Movie> movies = BookMyShow_POJO.getMovieNameObj().get(movieName);
+        ArrayList<Movie> movies = BookMyShow_POJO.getMovieNameObj().get(movieName); // get the object of the movie in arraylist
 
-        for (Movie movie : movies)
+        for (Movie movie : movies) // for loop to go through the arrayList
         {
 
-            if (movie.getLocation().equalsIgnoreCase(location))
+            if (movie.getLocation().equalsIgnoreCase(location)) // if the location matches with the location of the current user
             {
-                LocalDate movieDate = movie.getStartDate();
+                LocalDate movieDate = movie.getStartDate(); // get the date of the movie
 
-                if (currentDate.equals(movieDate))
+                if (currentDate.equals(movieDate)) // if the date matches
                 {
-                    System.out.println(" - " + movie.getMovieName());
+                    System.out.println(" - " + movie.getMovieName()); // display the movie name
                 }
             }
         }
     }
     System.out.println("-------------------------------");
 
-    System.out.println("Would you like to  change the (Date or Location) (Y/N) :");
-    String choice = in.nextLine();
+    System.out.println("Would you like to  change the (Date or Location) (Y/N) :"); // prompt the user to change date or location
+    String choice = in.nextLine(); // get the choice as input
     if (choice.equals("Y"))
     {
-        changeLocationOrDate(currentUser);
-        currentDate = currentUser.getDate();
-        for (String movieName : BookMyShow_POJO.getMovieNameObj().keySet())
+        LocalDate updatedDate = changeLocationOrDate(currentUser); // call the changeLocationOrDate method and pass currentUser
+        if (!(updatedDate == null)) // if the returned value is not null then it is a new date
         {
-            ArrayList<Movie> movies = BookMyShow_POJO.getMovieNameObj().get(movieName);
+            currentDate = updatedDate; // change the current date to the updated date
+        }
 
-            for (Movie movie : movies)
+        for (String movieName : BookMyShow_POJO.getMovieNameObj().keySet())// for loop to go through the theatre object
+        {
+            ArrayList<Movie> movies = BookMyShow_POJO.getMovieNameObj().get(movieName);// get the object of the movie in arraylist
+
+            for (Movie movie : movies)// for loop to go through the arrayList
             {
 
-                if (movie.getLocation().equalsIgnoreCase(location))
+                if (movie.getLocation().equalsIgnoreCase(location))// if the location matches with the location of the current user
                 {
-                    LocalDate movieDate = movie.getStartDate();
+                    LocalDate movieDate = movie.getStartDate();// get the date of the movie
 
-                    if (currentDate.equals(movieDate))
+                    if (currentDate.equals(movieDate))// if the date matches
                     {
-                        System.out.println(" - " + movie.getMovieName());
+                        System.out.println(" - " + movie.getMovieName());// display the movie name
                     }
                 }
             }
@@ -124,186 +123,197 @@ static void availableMovies(User_POJO currentUser)
 
     }
     System.out.println("Enter the Movie name to book : ");
-    String currentMovie = in.nextLine();
-    for(var movieObject : BookMyShow_POJO.getMovieNameObj().get(currentMovie))
+    String currentMovie = in.nextLine(); // get the name of the movie to book
+    for(var movieObject : BookMyShow_POJO.getMovieNameObj().get(currentMovie))//get the object of the selected movie
     {
-        if(movieObject.getLocation().equals(currentUser.getLocation()) && movieObject.getStartDate().isEqual(currentDate))
+        if(movieObject.getLocation().equals(currentUser.getLocation()) && movieObject.getStartDate().isEqual(currentDate)) // if the location and date matches
         {
-            moviess.add(movieObject);
+            moviess.add(movieObject); // add the object to the arrayList
         }
     }
-    showDetails(currentUser , moviess);
+    bookTicket(currentUser , moviess); // call the bookTicket method and pass the currentUser and the movie arrayList
 }
 
-
-static void changeLocationOrDate(User_POJO currentUser) {
+// method to change the locationOrDate
+static LocalDate changeLocationOrDate(User_POJO currentUser)
+{
     // Ask the user if they want to change the location or date
     System.out.println("Do you want to change:");
     System.out.println("1. Location");
     System.out.println("2. Date");
-    System.out.print("Enter your choice (1 or 2): ");
-    int choice = Integer.parseInt(in.nextLine());
+    System.out.println("3. Exit");
+    System.out.print("Enter your choice (1 or 2 or 3): ");
+    int choice = Integer.parseInt(in.nextLine()); // get the choice as an input
 
-    if (choice == 1)
+    if (choice == 1) // location
     {
-    // Change Location logic
-    System.out.println("Your Current Location: " + currentUser.getLocation());
+
+    System.out.println("Your Current Location: " + currentUser.getLocation()); // print the current location
 
      System.out.println("Available Locations:");
-     var availableLocations = new HashSet<>(); // Use a typed HashSet for type safety
+     var availableLocations = new HashSet<>(); // Hashset to store all the locations without duplicates
 
-    // Get all locations from TheatreNameObj()
-    for (Theatre_POJO theatre : BookMyShow_POJO.getTheatreNameObj().values())
+
+    for (Theatre_POJO theatre : BookMyShow_POJO.getTheatreNameObj().values()) // for loop to go through the theatre object
     {
-        availableLocations.add(theatre.getTheatreLocation());
+        availableLocations.add(theatre.getTheatreLocation()); // add the location of the theatre to the Hashset
     }
 
-    for (var location : availableLocations)
+    for (var location : availableLocations) // go through the available locations
     {
-        System.out.println(" - " + location);
+        System.out.println(" - " + location); // print the location
     }
 
     System.out.print("Enter your new location: ");
-    String newLocation = in.nextLine();
+    String newLocation = in.nextLine(); // get the preferred location as input
 
-    if (availableLocations.contains(newLocation))
+    if (availableLocations.contains(newLocation)) // check if the location exists
     {
-        currentUser.setLocation(newLocation); // Set the new location
-        System.out.println("Location changed successfully to: " + newLocation);
+        currentUser.setLocation(newLocation); // if exist then update the location of the current user
+        System.out.println("Location changed successfully to: " + newLocation); // display the new location
     }
-    else
+    else // if the location does not exist
     {
         System.out.println("Invalid location. Please try again.");
     }
 
     }
-    else if (choice == 2)
+    else if (choice == 2) // Date
     {
-        // Change Date logic
-        System.out.println("Enter your new preferred date : ");
-        LocalDate newDate = LocalDate.parse(in.nextLine(), BookMyShow_POJO.getDateFormatter());
 
-        currentUser.setPreferredDate(newDate); // Assuming User_POJO has setPreferredDate method
-        System.out.println("Date changed successfully to: " + newDate);
+        System.out.println("Enter your new preferred date : ");
+        LocalDate newDate = LocalDate.parse(in.nextLine(), BookMyShow_POJO.getDateFormatter()); // get the new date as an input
+
+        System.out.println("Date changed successfully to: " + newDate); // display the new Date
+        return newDate; // return the new date
+
+    }
+    else if (choice == 3) // exit
+    {
+        System.out.println("Exiting ............");
+        return null ; // return null for exit
 
     }
     else
     {
         System.out.println("Invalid choice. Please select 1 for location or 2 for date.");
     }
-
+        return null ; // return null
     }
 
-static void showDetails(User_POJO currentUser , ArrayList<Movie> movies)
+// method to book Ticket
+static void bookTicket(User_POJO currentUser , ArrayList<Movie> movies)
 {
     System.out.println("Currently Available Theatres");
-    HashMap<String,HashSet<Show_POJO>> ShowsAtTheatre = new HashMap<>();
+    HashMap<String,HashSet<Show_POJO>> ShowsAtTheatre = new HashMap<>(); //HashMap with theatre key and Hashset of show object
 
-    for(var movie : movies)
+    for(var movie : movies) // for loop to iterate through the movie arrayList
     {
-        if(ShowsAtTheatre.containsKey(movie.getTheatre().getTheatreName()))
+        if(ShowsAtTheatre.containsKey(movie.getTheatre().getTheatreName())) // if the theatre name exist in Hashset key
         {
-            ShowsAtTheatre.get(movie.getTheatre().getTheatreName()).add(movie.getShow());
+            ShowsAtTheatre.get(movie.getTheatre().getTheatreName()).add(movie.getShow()); // add the show to the movie
         }
-        else
+        else // if not exist
         {
-            HashSet<Show_POJO> shows = new HashSet<>();
-            shows.add(movie.getShow());
-            ShowsAtTheatre.put(movie.getTheatre().getTheatreName(), shows);
+            HashSet<Show_POJO> shows = new HashSet<>(); // create an new HashSet of Show
+            shows.add(movie.getShow()); // add the movie show to the HashSet
+            ShowsAtTheatre.put(movie.getTheatre().getTheatreName(), shows); // put the theatre name as key and show Hashset as value
         }
     }
 
-    for(String theatreName : ShowsAtTheatre.keySet())
+    for(String theatreName : ShowsAtTheatre.keySet()) // for loop to iterate through the Hashmap and get the Keys
     {
-            System.out.println("Theatre Name : "+theatreName);
-            System.out.println("Shows : "+ShowsAtTheatre.get(theatreName).toString());
+            System.out.println("Theatre Name : "+theatreName); // print the Key (Theatre name)
+            System.out.println("Shows : "+ShowsAtTheatre.get(theatreName).toString()); // call the overridden toString method to print the show time
     }
 
-    while (true)
+    while (true) // infinite loop to get Booking details
     {
         System.out.println("Enter the theatre name : ");
-        String theatreName = in.nextLine();
+        String theatreName = in.nextLine(); // get the theatre name as input
         System.out.println("Enter the show time : ");
-        LocalTime showTime = LocalTime.parse(in.nextLine(),BookMyShow_POJO.getTimeFormatter());
-        var shows = ShowsAtTheatre.get(theatreName);
-        if(shows == null)
+        LocalTime showTime = LocalTime.parse(in.nextLine(),BookMyShow_POJO.getTimeFormatter()); // get the showTime as input
+        HashSet<Show_POJO> shows = ShowsAtTheatre.get(theatreName); // get the show Hashset of the theatre
+        if(shows == null) // if show equals null
         {
-            System.out.println("Enter correct theatre...");
+            System.out.println("Enter correct theatre..."); // print to enter the valid theatre
         }
-        Show_POJO currentShow = null;
-        for(Show_POJO show : shows)
+        Show_POJO currentShow = null; // initialize the currentShow as null
+        for(Show_POJO show : shows) // iterate through the Hashset and get the Screen Object
         {
-            if(show.getStartTime().equals(showTime))
+            if(show.getStartTime().equals(showTime)) // if the show time matches
             {
-                currentShow = show;
+                currentShow = show; // reassign the current show to the show in the object
             }
         }
-        if(currentShow==null)
+        if(currentShow==null) // if null
         {
             System.out.println("Enter the correct time of show...");
+            continue;
         }
-        else
+        else // if not null
         {
-            System.out.println("Screen Name : "+currentShow.getScreen().getScreenName());
-            System.out.println("No of  Seats : "+currentShow.getScreen().getNoOfSeats());
-            var seatsAndGrids = currentShow.getScreen().getSeatingArrangement();
-            System.out.println("            ----------------- Seating arrangement ---------------");
-            for(var seats:seatsAndGrids.entrySet())
+            System.out.println("Screen Name : "+currentShow.getScreen().getScreenName());// display the Screen Name
+            System.out.println("No of  Seats : "+currentShow.getScreen().getNoOfSeats()); // display the no of seats
+            var seatsAndGrids = currentShow.getSeatingArrangement(); // store the seatingArrangement of the show in a variable
+            System.out.println("            ----------------- Seating arrangement ---------------           ");
+            for(var seats:seatsAndGrids.entrySet()) // get the key and value in for
             {
-                System.out.println(seats.getKey()+" "+seats.getValue());
+                System.out.println(seats.getKey()+" "+seats.getValue()); // print the key and the value
             }
         }
-        var seatsAndGrids = currentShow.getScreen().getSeatingArrangement();
+        var seatsAndGrids = currentShow.getSeatingArrangement();// store the seatingArrangement of the show in a variable
 
         System.out.println("Enter the No Seats to Book");
-        long seatCount = Long.parseLong(in.nextLine());
-        long price = seatCount*currentShow.getPrice();
-        ArrayList<String> temp = new ArrayList<>();
-        while(seatCount > 0 )
+        long seatCount = Long.parseLong(in.nextLine()); // get the no of seats to book as input
+        long price = seatCount*currentShow.getPrice(); // price is seatcount * price of a single ticket
+        ArrayList<String> bookedTickets = new ArrayList<>(); // create an arrayList to store bookedTickets
+        while(seatCount > 0 ) // while loop to get the seats
         {
             System.out.println("Enter the Seat Number to book");
-            String seat = in.nextLine();
+            String seat = in.nextLine(); // get the seatNumber as input
 
-            char row = seat.charAt(0);
-            int seatNumber = (Integer.parseInt(seat.substring(1))) -1 ;
-            ArrayList<String> seats = seatsAndGrids.get(row);
-            if (seats.get(seatNumber).equals("X"))
+            char row = seat.charAt(0); // set the row as first char at the seat variable
+            int seatNumber = (Integer.parseInt(seat.substring(1))) -1 ; // store the seat number using substring and -1 for index matching
+            ArrayList<String> seats = seatsAndGrids.get(row); // get the entered row and store it in a arrayList of String
+            if (seats.get(seatNumber).equals("X")) // if seatNumber has X
             {
                 System.out.println("------------------The Selected seat has been already booked-------------------");
-                continue;
+                continue;// seat already booked
             }
-            temp.add(seat);
-            seats.set(seatNumber , "X");
-            seatsAndGrids.put(row ,seats);
-            for(var seatss:seatsAndGrids.entrySet())
+            bookedTickets.add(seat); // add the seat to the arrayList
+            seats.set(seatNumber , "X"); // set X in the index
+            seatsAndGrids.put(row ,seats); // put the row and updated arrayList
+            for(var seatss:seatsAndGrids.entrySet())// get the key and value in for
             {
-                System.out.println(seatss.getKey()+" "+seatss.getValue());
+                System.out.println(seatss.getKey()+" "+seatss.getValue());// print the key and the value
             }
 
-            seatCount -- ;
+            seatCount -- ; // decrement the seat count
         }
-        System.out.println("Paying rupees " + price);
-        Tickets ticket = new Tickets(theatreName ,movies.getFirst().getMovieName(), currentShow.getScreen().getScreenName() , currentUser.getLocation() , showTime ,movies.getFirst().getDuration(), temp , price);
+        System.out.println("Paying rupees " + price); // display the total price
+        Tickets ticket = new Tickets(theatreName ,movies.getFirst().getMovieName(), currentShow.getScreen().getScreenName() , currentUser.getLocation() , showTime ,movies.getFirst().getDuration(), bookedTickets , price); // pass all the details to the new Ticket object
 
-        currentUser.getTicket().add(ticket);
-        break;
+        currentUser.getTicket().add(ticket); // add the ticket object to the current user ticket arrayList
+        break; // break the while loop
     }
 }
 
+// method to displayTicket
 static void viewTicket(User_POJO currentUser)
 {
-    ArrayList<Tickets> ticket = currentUser.getTicket();
-    for (Tickets tickets : ticket)
+    ArrayList<Tickets> ticket = currentUser.getTicket();//get the ticket object for the current user
+    for (Tickets tickets : ticket) // go through the arrayList
     {
         System.out.println("------------------------------");
-        System.out.println("Theatre Name : " + tickets.getTheatreName());
-        System.out.println("Theatre Location : " + tickets.getLocation());
-        System.out.println("Movie Name : " + tickets.getMovieName());
-        System.out.println("Screen Name : " + tickets.getScreenName());
-        System.out.println("Show Time : " + tickets.getStartTime());
-        System.out.println("Movie Duration :" + tickets.getDuration());
-        System.out.println("Booked Seats : " + tickets.getSeats());
-        System.out.println("Price : " + tickets.getPrice());
+        System.out.println("Theatre Name : " + tickets.getTheatreName()); // print the theatre name
+        System.out.println("Theatre Location : " + tickets.getLocation()); // print the theatre location
+        System.out.println("Movie Name : " + tickets.getMovieName()); // print the movie name
+        System.out.println("Screen Name : " + tickets.getScreenName());// print the screen name
+        System.out.println("Show Time : " + tickets.getStartTime());// print the show time
+        System.out.println("Movie Duration :" + tickets.getDuration());// print the duration of the movie
+        System.out.println("Booked Seats : " + tickets.getSeats()); // print the booked seats
+        System.out.println("Price : " + tickets.getPrice());// print the total price
         System.out.println("------------------------------");
 
     }
