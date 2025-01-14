@@ -284,21 +284,21 @@ static void bookTicket(User_POJO currentUser , ArrayList<Movie> movies)
                 sum += Integer.parseInt(grids); // calculating sum of grids
             }
 
-            String seatToBook = null; // variable to check if the seat has been booked or not
+            String selectedSeat = null; // variable to check if the seat has been booked or not
 
             if(seatNumber <= Integer.parseInt(grid[0])) // if the seat number is  less than first grid
             {
-                seatToBook = currentShow.getSeatingArrangement().get(row).get(seatNumber-1); // get the seat number as per index
+                selectedSeat = currentShow.getSeatingArrangement().get(row).get(seatNumber-1); // get the seat number as per index
             }
             else if(seatNumber >= (sum+1) - Integer.parseInt(grid[2]))// if the seat number is  greater than middle space
             {
-                seatToBook = currentShow.getSeatingArrangement().get(row).get(seatNumber+1); // get the seat number plus 1 index
+                selectedSeat = currentShow.getSeatingArrangement().get(row).get(seatNumber+1); // get the seat number plus 1 index
             }
             else if(seatNumber > Integer.parseInt(grid[0])) // if the seat number is greater than 1st space
             {
-                seatToBook = currentShow.getSeatingArrangement().get(row).get(seatNumber); // get the number as it is
+                selectedSeat = currentShow.getSeatingArrangement().get(row).get(seatNumber); // get the number as it is
             }
-            if (seatToBook.equals("X")) // if seatNumber has X
+            if (selectedSeat.equals("X")) // if seatNumber has X
             {
                 System.out.println("------------------The Selected seat has been already booked-------------------");
                 continue;// seat already booked
