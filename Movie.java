@@ -4,7 +4,6 @@ public class Movie {
     private  Show_POJO show;
     private ScreenPOJO screen;
     private Theatre_POJO theatre; //
-    private long duration; // variable to store the duration of the movie
     private String movieName ; // variable to store the movieName
     private LocalDate startDate ; // variable to store the screening date
     private String location ; // variable to store the location
@@ -15,7 +14,6 @@ public class Movie {
         this.movieName = movieName;
         this.location = location;
         this.startDate = startDate;
-        this.duration = duration;
         this.theatre = theatres;
         this.screen = screen;
         this.show = show;
@@ -38,11 +36,7 @@ public class Movie {
     {
         return location;
     }
-
-    public long getDuration()
-    {
-        return duration;
-    }
+    
 
     public Theatre_POJO getTheatre()
     {
@@ -55,7 +49,7 @@ public class Movie {
     }
 
     public ScreenPOJO getScreen()
-    {
+      {
         return screen;
     }
 }
