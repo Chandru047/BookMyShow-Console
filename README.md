@@ -53,7 +53,7 @@ BookMyShow-Console-main/
 
 Below is the detailed architectural diagram of the system showing the relationships between different components:
 
-![System Architecture](architecture.png)
+![System Architecture](Excalidraw/Excalidraw.png)
 
 🔗 [View Diagram in Excalidraw](https://excalidraw.com/#json=nuZT4p1iXuVKm7HWg9syD,8N6-eBL4gKJRHKKZWdDaqQ)
 
