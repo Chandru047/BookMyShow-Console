@@ -15,7 +15,8 @@ public class User_POJO
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(String id)
+    {
 
         this.id = id;
     }
@@ -31,13 +32,8 @@ public class User_POJO
         this.pass = pass;
     }
 
-
-    public String getName()
+    public void setname(String name)
     {
-        return name;
-    }
-
-    public void setname(String name) {
 
         this.name = name;
     }
@@ -47,12 +43,14 @@ public class User_POJO
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(String location)
+    {
 
         this.location = location;
     }
 
-    public ArrayList<Tickets> getTicket() {
+    public ArrayList<Tickets> getTicket()
+    {
         return ticket;
     }
 

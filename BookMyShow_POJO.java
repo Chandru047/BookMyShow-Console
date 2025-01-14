@@ -36,20 +36,16 @@ public class BookMyShow_POJO
         return timeFormatter ;
     }
 
-    public static HashMap<String,Theatre_POJO> getTheatreNameObj() {
+    public static HashMap<String,Theatre_POJO> getTheatreNameObj()
+    {
         return theatreNameObj;
     }
 
-    public static void setTheatreNameObj(HashMap<String,Theatre_POJO> theatreNameObj) {
-        BookMyShow_POJO.theatreNameObj = theatreNameObj;
-    }
-
-    public static HashMap<String, ArrayList<Movie>> getMovieNameObj() {
+    public static HashMap<String, ArrayList<Movie>> getMovieNameObj()
+    {
         return movieNameObj;
     }
 
-    public static void setMovieNameObj(HashMap<String, ArrayList<Movie>> movieNameObj) {
-        BookMyShow_POJO.movieNameObj = movieNameObj;
-    }
+
 
 }

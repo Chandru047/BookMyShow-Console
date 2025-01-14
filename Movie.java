@@ -23,56 +23,39 @@ public class Movie {
 
 
     //Getters and Setters
-    public String getMovieName() {
+
+    public String getMovieName()
+    {
         return movieName;
     }
 
-    public void setMovieName(String movieName) {
-        this.movieName = movieName;
-    }
-
-    public LocalDate getStartDate() {
+    public LocalDate getStartDate()
+    {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-
-    public String getLocation() {
+    public String getLocation()
+    {
         return location;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public long getDuration() {
+    public long getDuration()
+    {
         return duration;
     }
 
-    public void setDuration(long duration) {
-        this.duration = duration;
-    }
-
-    public Theatre_POJO getTheatre() {
+    public Theatre_POJO getTheatre()
+    {
         return theatre;
     }
 
-    public void setTheatre(Theatre_POJO theatre) {
-        this.theatre = theatre;
-    }
-
-    public ScreenPOJO getScreen() {
-        return screen;
-    }
-
-    public void setScreen(ScreenPOJO screen) {
-        this.screen = screen;
-    }
-
-    public Show_POJO getShow() {
+    public Show_POJO getShow()
+    {
         return show;
+    }
+
+    public ScreenPOJO getScreen()
+    {
+        return screen;
     }
 }

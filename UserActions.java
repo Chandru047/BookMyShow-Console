@@ -266,24 +266,58 @@ static void bookTicket(User_POJO currentUser , ArrayList<Movie> movies)
 
         System.out.println("Enter the No Seats to Book");
         long seatCount = Long.parseLong(in.nextLine()); // get the no of seats to book as input
-        long price = seatCount*currentShow.getPrice(); // price is seatcount * price of a single ticket
-        ArrayList<String> bookedTickets = new ArrayList<>(); // create an arrayList to store bookedTickets
+        long price = seatCount*currentShow.getPrice(); // price is seat count * price of a single ticket
+        ArrayList<String> bookedTickets = new ArrayList<>();// create an arrayList to store bookedTickets
         while(seatCount > 0 ) // while loop to get the seats
         {
             System.out.println("Enter the Seat Number to book");
             String seat = in.nextLine(); // get the seatNumber as input
 
             char row = seat.charAt(0); // set the row as first char at the seat variable
-            int seatNumber = (Integer.parseInt(seat.substring(1))) -1 ; // store the seat number using substring and -1 for index matching
-            ArrayList<String> seats = seatsAndGrids.get(row); // get the entered row and store it in a arrayList of String
-            if (seats.get(seatNumber).equals("X")) // if seatNumber has X
+            int seatNumber = (Integer.parseInt(seat.substring(1))); // store the seat number using substring and -1 for index matching
+
+            String[] grid = currentShow.getScreen().getGrid().split("\\*"); // get the grid pattern from the screen
+            int sum = 0; // variable to store the sum of the grid
+            for(String grids:grid)
+            {
+                sum += Integer.parseInt(grids); // calculating sum of grids
+            }
+
+            String seatToBook = null; // variable to check if the seat has been booked or not
+
+            if(seatNumber <= Integer.parseInt(grid[0])) // if the seat number is  less than first grid
+            {
+                seatToBook = currentShow.getSeatingArrangement().get(row).get(seatNumber-1); // get the seat number as per index
+            }
+            else if(seatNumber >= (sum+1) - Integer.parseInt(grid[2]))// if the seat number is  greater than middle space
+            {
+                seatToBook = currentShow.getSeatingArrangement().get(row).get(seatNumber+1); // get the seat number plus 1 index
+            }
+            else if(seatNumber > Integer.parseInt(grid[0])) // if the seat number is greater than 1st space
+            {
+                seatToBook = currentShow.getSeatingArrangement().get(row).get(seatNumber); // get the number as it is
+            }
+            if (seatToBook.equals("X")) // if seatNumber has X
             {
                 System.out.println("------------------The Selected seat has been already booked-------------------");
                 continue;// seat already booked
             }
+
+
+            if(seatNumber <= Integer.parseInt(grid[0]))// if the seat number is  less than first grid
+            {
+                currentShow.getSeatingArrangement().get(row).set(seatNumber-1,"X");// get the seat number as per index and set X
+            }
+            else if(seatNumber >= (sum+1) - Integer.parseInt(grid[2]))//if the seat number is  greater than middle space
+            {
+                currentShow.getSeatingArrangement().get(row).set(seatNumber+1,"X");// get the seat number plus 1 index and set X
+            }
+            else if(seatNumber > Integer.parseInt(grid[0]))// if the seat number is greater than 1st space
+            {
+                currentShow.getSeatingArrangement().get(row).set(seatNumber,"X");// get the number as it is and set X
+            }
             bookedTickets.add(seat); // add the seat to the arrayList
-            seats.set(seatNumber , "X"); // set X in the index
-            seatsAndGrids.put(row ,seats); // put the row and updated arrayList
+
             for(var seatss:seatsAndGrids.entrySet())// get the key and value in for
             {
                 System.out.println(seatss.getKey()+" "+seatss.getValue());// print the key and the value

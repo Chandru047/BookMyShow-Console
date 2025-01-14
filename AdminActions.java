@@ -202,17 +202,18 @@ public class AdminActions
                 System.out.println("Show overlaps with an existing one.");
                 return; // exit out of the method
             }
-            HashMap<Character, ArrayList<String>> clonedMap = new HashMap<>();
-            for (var entry : screen.getSeatingArrangement().entrySet()) {
-                char key = entry.getKey();
-                ArrayList<String> value = entry.getValue();
+            HashMap<Character, ArrayList<String>> clone = new HashMap<>(); // HashMap to copy the SeatingArrangement
+            for (var entry : screen.getSeatingArrangement().entrySet()) // get the key and values of the existing Hashmap
+            {
+                char key = entry.getKey(); // store the key
+                ArrayList<String> value = entry.getValue(); // store the value in arrayList of String
 
                 // Deep copy the ArrayList
                 ArrayList<String> clonedList = new ArrayList<>(value);
-                clonedMap.put(key, clonedList);
+                clone.put(key, clonedList); // put the key and the String ArrayList
             }
 
-            Show_POJO show = new Show_POJO(startTime, endTime, date, screen, price , clonedMap); // create an show object and add the details of the show
+            Show_POJO show = new Show_POJO(startTime, endTime, date, screen, price , clone); // create an show object and add the details of the show
             screen.getShows().add(show); // add the object to the screen
 
             Movie currentMovie = new Movie(movieName, location, date, duration, theatres, screen, show); // create an movie object and store the details of the movie
@@ -287,7 +288,7 @@ public class AdminActions
             {
                 continue;
             }
-            ScreenPOJO screenPOJO = (new ScreenPOJO(screenName, numberSeats, grid)); // create a new screen object and store all the details
+            ScreenPOJO screenPOJO = (new ScreenPOJO(screenName, numberSeats, grid , screenGrid)); // create a new screen object and store all the details
             screensHashMap.put(screenName , screenPOJO); // add it to the Hashmap
             screenCount--; // Decrement to iterate through the Screens
         }
