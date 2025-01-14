@@ -326,7 +326,7 @@ static void bookTicket(User_POJO currentUser , ArrayList<Movie> movies)
             seatCount -- ; // decrement the seat count
         }
         System.out.println("Paying rupees " + price); // display the total price
-        Tickets ticket = new Tickets(theatreName ,movies.getFirst().getMovieName(), currentShow.getScreen().getScreenName() , currentUser.getLocation() , showTime ,movies.getFirst().getDuration(), bookedTickets , price); // pass all the details to the new Ticket object
+        Tickets ticket = new Tickets(theatreName ,movies.getFirst().getMovieName(), currentShow.getScreen().getScreenName() , currentUser.getLocation() , showTime , bookedTickets , price); // pass all the details to the new Ticket object
 
         currentUser.getTicket().add(ticket); // add the ticket object to the current user ticket arrayList
         break; // break the while loop
@@ -345,7 +345,6 @@ static void viewTicket(User_POJO currentUser)
         System.out.println("Movie Name : " + tickets.getMovieName()); // print the movie name
         System.out.println("Screen Name : " + tickets.getScreenName());// print the screen name
         System.out.println("Show Time : " + tickets.getStartTime());// print the show time
-        System.out.println("Movie Duration :" + tickets.getDuration());// print the duration of the movie
         System.out.println("Booked Seats : " + tickets.getSeats()); // print the booked seats
         System.out.println("Price : " + tickets.getPrice());// print the total price
         System.out.println("------------------------------");
