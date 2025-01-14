@@ -80,7 +80,7 @@ public class AdminActions
     }
 
     static void addMovie() {
-        while (true) {
+        main : while (true) {
             System.out.println("Enter the Movie name");
             String movieName = in.nextLine(); // get the name of the movie to add
 
@@ -108,8 +108,7 @@ public class AdminActions
             try // try to get an date input
             {
                 date = LocalDate.parse(in.nextLine(), BookMyShow_POJO.getDateFormatter());
-            }
-            catch (Exception e) // if an exception occurs then catch it
+            } catch (Exception e) // if an exception occurs then catch it
             {
                 System.out.println("Invalid date format!");
                 continue; // go to the beginning of the while loop
@@ -120,8 +119,7 @@ public class AdminActions
             try // try to get the duration
             {
                 duration = Long.parseLong(in.nextLine());
-            }
-            catch (NumberFormatException e)// if an exception occurs then catch it
+            } catch (NumberFormatException e)// if an exception occurs then catch it
             {
                 System.out.println("Invalid duration!");
                 continue;// go to the beginning of the while loop
@@ -129,11 +127,9 @@ public class AdminActions
 
             System.out.println("Enter the price of a single ticket"); // get the price of the movie
             long price; // try to get the price
-            try
-            {
+            try {
                 price = Long.parseLong(in.nextLine());
-            }
-            catch (NumberFormatException e)// if an exception occurs then catch it
+            } catch (NumberFormatException e)// if an exception occurs then catch it
             {
                 System.out.println("Invalid ticket price!");
                 continue; // go to the beginning of the while loop
@@ -157,74 +153,71 @@ public class AdminActions
                 continue; // go to the beginning of the while loop
             }
 
+            while (true) {
             System.out.println("Available Screens:");
             for (String screenName : theatres.getScreenNameObj().keySet()) // go through all the screen keys
             {
                 System.out.println(screenName); // print the key (Screen Name)
             }
 
-            System.out.print("Enter the name of the Screen: ");
-            String screenName = in.nextLine();// get the name of the screen as input
-            ScreenPOJO screen = theatres.getScreenNameObj().get(screenName);// get that screen object
-            if (screen == null) // if the name does not match
-            {
-                System.out.println("Invalid screen name!");
-                continue;// go to the beginning of the while loop
-            }
-
-            System.out.print("Enter the start time of the Show (HH:mm): ");
-            LocalTime startTime;
-            try // get the start time of the movie
-            {
-                startTime = LocalTime.parse(in.nextLine(), BookMyShow_POJO.getTimeFormatter());
-            }
-            catch (Exception e) // if an exception occurs then catch it
-            {
-                System.out.println("Invalid time format!");
-                continue;// go to the beginning of the while loop
-            }
-
-            LocalTime endTime = startTime.plusMinutes(duration + 30); // calculate the end time
-            boolean overlaps = false; // initialize the boolean value
-            for (Show_POJO show : screen.getShows()) // get the show in the screen
-            {
-                // Check if the date of the new show is the same as the existing show’s date
-                // check if the new show ends before the existing show starts
-                // check if the new show starts after the existing show ends
-                if (date.isEqual(show.getDate()) && !(endTime.isBefore(show.getStartTime()) || startTime.isAfter(show.getEndTime()))) {
-                    overlaps = true; // change the boolean to true
-                    break; // break the loop
+                System.out.print("Enter the name of the Screen: ");
+                String screenName = in.nextLine();// get the name of the screen as input
+                ScreenPOJO screen = theatres.getScreenNameObj().get(screenName);// get that screen object
+                if (screen == null) // if the name does not match
+                {
+                    System.out.println("Invalid screen name!");
+                    continue;// go to the beginning of the while loop
                 }
+
+                System.out.print("Enter the start time of the Show (HH:mm): ");
+                LocalTime startTime;
+                try // get the start time of the movie
+                {
+                    startTime = LocalTime.parse(in.nextLine(), BookMyShow_POJO.getTimeFormatter());
+                } catch (Exception e) // if an exception occurs then catch it
+                {
+                    System.out.println("Invalid time format!");
+                    continue;// go to the beginning of the while loop
+                }
+
+                LocalTime endTime = startTime.plusMinutes(duration + 30); // calculate the end time
+                boolean overlaps = false; // initialize the boolean value
+                for (Show_POJO show : screen.getShows()) // get the show in the screen
+                {
+                    // Check if the date of the new show is the same as the existing show’s date
+                    // check if the new show ends before the existing show starts
+                    // check if the new show starts after the existing show ends
+                    if (date.isEqual(show.getDate()) && !(endTime.isBefore(show.getStartTime()) || startTime.isAfter(show.getEndTime()))) {
+                        overlaps = true; // change the boolean to true
+                        break; // break the loop
+                    }
+                }
+
+                if (overlaps)  // if overlap true
+                {
+                    System.out.println("Show overlaps with an existing one.");
+                    return; // exit out of the method
+                }
+                HashMap<Character, ArrayList<String>> clone = new HashMap<>(); // HashMap to copy the SeatingArrangement
+                for (var entry : screen.getSeatingArrangement().entrySet()) // get the key and values of the existing Hashmap
+                {
+                    char key = entry.getKey(); // store the key
+                    ArrayList<String> value = entry.getValue(); // store the value in arrayList of String
+
+                    // Deep copy the ArrayList
+                    ArrayList<String> clonedList = new ArrayList<>(value);
+                    clone.put(key, clonedList); // put the key and the String ArrayList
+                }
+
+                Show_POJO show = new Show_POJO(startTime, endTime, date, screen, price, clone); // create an show object and add the details of the show
+                screen.getShows().add(show); // add the object to the screen
+
+                Movie currentMovie = new Movie(movieName, location, date, duration, theatres, screen, show); // create an movie object and store the details of the movie
+                BookMyShow_POJO.getMovieNameObj().get(movieName).add(currentMovie); // add the movie object to that key
+
+                System.out.println("Movie added successfully!");
+                break main; // break the main while loop
             }
-
-            if (overlaps)  // if overlap true
-            {
-                System.out.println("Show overlaps with an existing one.");
-                return; // exit out of the method
-            }
-            HashMap<Character, ArrayList<String>> clone = new HashMap<>(); // HashMap to copy the SeatingArrangement
-            for (var entry : screen.getSeatingArrangement().entrySet()) // get the key and values of the existing Hashmap
-            {
-                char key = entry.getKey(); // store the key
-                ArrayList<String> value = entry.getValue(); // store the value in arrayList of String
-
-                // Deep copy the ArrayList
-                ArrayList<String> clonedList = new ArrayList<>(value);
-                clone.put(key, clonedList); // put the key and the String ArrayList
-            }
-
-            Show_POJO show = new Show_POJO(startTime, endTime, date, screen, price , clone); // create an show object and add the details of the show
-            screen.getShows().add(show); // add the object to the screen
-
-            Movie currentMovie = new Movie(movieName, location, date, duration, theatres, screen, show); // create an movie object and store the details of the movie
-            if (!BookMyShow_POJO.getMovieNameObj().containsKey(movieName))  // if the movie not exist
-            {
-                BookMyShow_POJO.getMovieNameObj().put(movieName, new ArrayList<>()); // put the key and an empty arraylist
-            }
-            BookMyShow_POJO.getMovieNameObj().get(movieName).add(currentMovie); // add the movie object to that key
-
-            System.out.println("Movie added successfully!");
-            break; // break the for loop
         }
     }
 
