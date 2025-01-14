@@ -244,6 +244,7 @@ static void bookTicket(User_POJO currentUser , ArrayList<Movie> movies)
             if(show.getStartTime().equals(showTime)) // if the show time matches
             {
                 currentShow = show; // reassign the current show to the show in the object
+                break;
             }
         }
         if(currentShow==null) // if null
