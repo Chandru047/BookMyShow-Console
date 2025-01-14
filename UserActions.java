@@ -267,6 +267,12 @@ static void bookTicket(User_POJO currentUser , ArrayList<Movie> movies)
         long seatCount = Long.parseLong(in.nextLine()); // get the no of seats to book as input
         long price = seatCount*currentShow.getPrice(); // price is seat count * price of a single ticket
         var bookedTickets = seatSelection(seatCount , currentShow);
+        if (bookedTickets == null)
+        {
+            System.out.println("Booking Cancelled ");
+            System.out.println("Exiting ....");
+            return;
+        }
         System.out.println("Paying rupees " + price); // display the total price
         Tickets ticket = new Tickets(theatreName ,movies.getFirst().getMovieName(), currentShow.getScreen().getScreenName() , currentUser.getLocation() , showTime , bookedTickets , price); // pass all the details to the new Ticket object
 
@@ -293,70 +299,83 @@ static void viewTicket(User_POJO currentUser)
 
     }
 }
-static ArrayList<String> seatSelection(long seatCount , Show_POJO currentShow)
-{
-    var seatsAndGrids = currentShow.getSeatingArrangement();// store the seatingArrangement of the show in a variable
+    static ArrayList<String> seatSelection(long seatCount, Show_POJO currentShow) {
+        var seatsAndGrids = currentShow.getSeatingArrangement(); // Store the seating arrangement of the show
+        HashMap<Character, ArrayList<String>> duplicateGrid = new HashMap<>(); // HashMap to copy the seating arrangement
 
-
-    ArrayList<String> bookedTickets = new ArrayList<>();// create an arrayList to store bookedTickets
-    while(seatCount > 0 ) // while loop to get the seats
-    {
-        System.out.println("Enter the Seat Number to book");
-        String seat = in.nextLine(); // get the seatNumber as input
-
-        char row = seat.charAt(0); // set the row as first char at the seat variable
-        int seatNumber = (Integer.parseInt(seat.substring(1))); // store the seat number using substring and -1 for index matching
-
-        String[] grid = currentShow.getScreen().getGrid().split("\\*"); // get the grid pattern from the screen
-        int sum = 0; // variable to store the sum of the grid
-        for(String grids:grid)
-        {
-            sum += Integer.parseInt(grids); // calculating sum of grids
+        // Deep copy the seating arrangement
+        for (var entry : seatsAndGrids.entrySet()) {
+            char key = entry.getKey(); // Store the key
+            ArrayList<String> value = entry.getValue(); // Store the value as an ArrayList of strings
+            ArrayList<String> clonedList = new ArrayList<>(value); // Deep copy the ArrayList
+            duplicateGrid.put(key, clonedList); // Put the key and the cloned list into the duplicate grid
         }
 
-        String selectedSeat = null; // variable to check if the seat has been booked or not
+        ArrayList<String> bookedTickets = new ArrayList<>(); // ArrayList to store booked tickets
 
-        if(seatNumber <= Integer.parseInt(grid[0])) // if the seat number is  less than first grid
-        {
-            selectedSeat = currentShow.getSeatingArrangement().get(row).get(seatNumber-1); // get the seat number as per index
-        }
-        else if(seatNumber >= (sum+1) - Integer.parseInt(grid[2]))// if the seat number is  greater than middle space
-        {
-            selectedSeat = currentShow.getSeatingArrangement().get(row).get(seatNumber+1); // get the seat number plus 1 index
-        }
-        else if(seatNumber > Integer.parseInt(grid[0])) // if the seat number is greater than 1st space
-        {
-            selectedSeat = currentShow.getSeatingArrangement().get(row).get(seatNumber); // get the number as it is
-        }
-        if (selectedSeat.equals("X")) // if seatNumber has X
-        {
-            System.out.println("------------------The Selected seat has been already booked-------------------");
-            continue;// seat already booked
+        while (seatCount > 0) { // Loop until all seats are booked
+            System.out.println("Enter the Seat Number to book");
+            String seat = in.nextLine(); // Get the seat number as input
+
+            char row = seat.charAt(0); // Extract the row from the seat input
+            int seatNumber = Integer.parseInt(seat.substring(1)); // Extract the seat number (index-matching)
+
+            String[] grid = currentShow.getScreen().getGrid().split("\\*"); // Parse the grid pattern
+            int sum = 0;
+
+            for (String grids : grid) {
+                sum += Integer.parseInt(grids); // Calculate the sum of the grid
+            }
+
+            String selectedSeat;
+            int index;
+
+            if (seatNumber <= Integer.parseInt(grid[0])) { // Seat number <= first grid
+                index = seatNumber - 1;
+            } else if (seatNumber >= (sum + 1) - Integer.parseInt(grid[2])) { // Seat number >= middle space
+                index = seatNumber + 1;
+            } else { // Seat number is in between
+                index = seatNumber;
+            }
+
+            // Check if the seat is already booked
+            selectedSeat = currentShow.getSeatingArrangement().get(row).get(index);
+            if (selectedSeat.equals("X")) {
+                System.out.println("------------------The Selected seat has been already booked-------------------");
+                continue; // Skip to the next iteration
+            }
+
+            // Mark the seat as booked in the duplicate grid
+            duplicateGrid.get(row).set(index, "X");
+            bookedTickets.add(seat); // Add the booked seat to the list
+
+            // Display the updated seating arrangement
+            for (var seatEntry : duplicateGrid.entrySet()) {
+                System.out.println(seatEntry.getKey() + " " + seatEntry.getValue());
+            }
+
+            seatCount--; // Decrement the seat count
         }
 
-
-        if(seatNumber <= Integer.parseInt(grid[0]))// if the seat number is  less than first grid
-        {
-            currentShow.getSeatingArrangement().get(row).set(seatNumber-1,"X");// get the seat number as per index and set X
-        }
-        else if(seatNumber >= (sum+1) - Integer.parseInt(grid[2]))//if the seat number is  greater than middle space
-        {
-            currentShow.getSeatingArrangement().get(row).set(seatNumber+1,"X");// get the seat number plus 1 index and set X
-        }
-        else if(seatNumber > Integer.parseInt(grid[0]))// if the seat number is greater than 1st space
-        {
-            currentShow.getSeatingArrangement().get(row).set(seatNumber,"X");// get the number as it is and set X
-        }
-        bookedTickets.add(seat); // add the seat to the arrayList
-
-        for(var seatss:seatsAndGrids.entrySet())// get the key and value in for
-        {
-            System.out.println(seatss.getKey()+" "+seatss.getValue());// print the key and the value
+        // Confirmation before finalizing the booking
+        System.out.println("Are you sure you want to book the tickets (Y/N)?");
+        String choice = in.nextLine();
+        if (choice.equalsIgnoreCase("Y")) {
+            // Finalize the booking by updating the original seating arrangement
+            for (var entry : duplicateGrid.entrySet()) {
+                char rowKey = entry.getKey();
+                ArrayList<String> updatedRow = entry.getValue();
+                currentShow.getSeatingArrangement().put(rowKey, updatedRow);
+            }
+            System.out.println("Tickets have been successfully booked.");
+        } else {
+            System.out.println("Booking has been canceled.");
+            return null;
         }
 
-        seatCount -- ; // decrement the seat count
+        return bookedTickets; // Return the list of booked tickets
     }
-    return bookedTickets;
-}
+
+
 }
 
