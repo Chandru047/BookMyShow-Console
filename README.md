@@ -1,7 +1,6 @@
 # 🎬 Theater Booking System
 
 [![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://www.java.com)
-[![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg?style=for-the-badge)](https://github.com/username/theater-booking)
 
 > A comprehensive Java project for theater management and booking operations, built for deep understanding of Java concepts and OOP principles.
@@ -136,7 +135,7 @@ java Main
 ## 🛠️ Technical Stack
 
 ### Core Technology
-- Java SE
+- Java
 - Collections Framework
 - DateTime API
 
@@ -161,14 +160,6 @@ Master these Java concepts:
 - JRE 8 or higher
 - Memory: 2GB minimum
 - Storage: 500MB
-
-## 🚀 Future Roadmap
-
-1. 💳 Payment gateway integration
-2. 📱 Mobile app development
-3. 🎯 AI-powered seat selection
-4. 📨 Real-time notifications
-5. ⭐ Review system implementation
 
 ## 🤝 Contributing
 
@@ -207,16 +198,7 @@ This project serves as a practical example of:
 - Performance optimization
 - Security implementation
 
-## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- Java programming community
-- Open source contributors
-- IntelliJ IDEA for the IDE
-- All project contributors
 
 ---
 
