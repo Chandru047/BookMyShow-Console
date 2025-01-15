@@ -30,22 +30,20 @@ This educational project demonstrates advanced Java programming concepts through
 
 ```
 BookMyShow-Console-main/
-├── .idea/
-├── out/
-│   ├── Admin_POJO
-│   ├── AdminActions
-│   ├── BookMyShow
-│   ├── BookMyShow_POJO
-│   ├── Main
-│   ├── Movie
-│   ├── README.md
-│   ├── ScreenPOJO
-│   ├── Show_POJO
-│   ├── Theatre_POJO
-│   ├── Tickets
-│   ├── User_POJO
-│   ├── UserActions
-│   └── Utilities
+   ├── Admin_POJO
+   ├── AdminActions
+   ├── BookMyShow
+   ├── BookMyShow_POJO
+   ├── Main
+   ├── Movie
+   ├── README.md
+   ├── ScreenPOJO
+   ├── Show_POJO
+   ├── Theatre_POJO
+   ├── Tickets
+   ├── User_POJO
+   ├── UserActions
+   └── Utilities
 ```
 
 ## 🏗️ System Architecture
