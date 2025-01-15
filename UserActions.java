@@ -323,18 +323,24 @@ static void viewTicket(User_POJO currentUser)
             String[] grid = currentShow.getScreen().getGrid().split("\\*"); // Parse the grid pattern
             int sum = 0;
 
-            for (String grids : grid) {
+            for (String grids : grid)
+            {
                 sum += Integer.parseInt(grids); // Calculate the sum of the grid
             }
 
             String selectedSeat;
             int index;
 
-            if (seatNumber <= Integer.parseInt(grid[0])) { // Seat number <= first grid
+            if (seatNumber <= Integer.parseInt(grid[0])) // Seat number <= first grid
+            {
                 index = seatNumber - 1;
-            } else if (seatNumber >= (sum + 1) - Integer.parseInt(grid[2])) { // Seat number >= middle space
+            }
+            else if (seatNumber >= (sum + 1) - Integer.parseInt(grid[2])) // Seat number >= middle space , Adding 1 in sum for 1 based indexing
+            {
                 index = seatNumber + 1;
-            } else { // Seat number is in between
+            }
+            else
+            { // Seat number is in between
                 index = seatNumber;
             }
 
@@ -375,7 +381,5 @@ static void viewTicket(User_POJO currentUser)
 
         return bookedTickets; // Return the list of booked tickets
     }
-
-
 }
 

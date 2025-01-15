@@ -92,7 +92,7 @@ public class AdminActions
             {
                 if (theatre.getTheatreLocation().equals(location)) // check if the theatres location matches the provided location
                 {
-                    available = true; // if matches then change the boolean to trur
+                    available = true; // if matches then change the boolean to true
                     break; // after a match if found exit of the loop
                 }
             }
@@ -185,8 +185,8 @@ public class AdminActions
                 for (Show_POJO show : screen.getShows()) // get the show in the screen
                 {
                     // Check if the date of the new show is the same as the existing show’s date
-                    // check if the new show ends before the existing show starts
-                    // check if the new show starts after the existing show ends
+                    // The end time of the new show must be before the start time of the existing show
+                    // The start time of the new show must be after the end time of the existing show
                     if (date.isEqual(show.getDate()) && !(endTime.isBefore(show.getStartTime()) || startTime.isAfter(show.getEndTime()))) {
                         overlaps = true; // change the boolean to true
                         break; // break the loop
@@ -213,6 +213,10 @@ public class AdminActions
                 screen.getShows().add(show); // add the object to the screen
 
                 Movie currentMovie = new Movie(movieName, location, date, duration, theatres, screen, show); // create an movie object and store the details of the movie
+                if (!BookMyShow_POJO.getMovieNameObj().containsKey(movieName))  // if the movie not exist
+                {
+                    BookMyShow_POJO.getMovieNameObj().put(movieName, new ArrayList<>()); // put the key and an empty arraylist
+                }
                 BookMyShow_POJO.getMovieNameObj().get(movieName).add(currentMovie); // add the movie object to that key
 
                 System.out.println("Movie added successfully!");

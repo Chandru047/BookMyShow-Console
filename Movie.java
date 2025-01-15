@@ -36,7 +36,7 @@ public class Movie {
     {
         return location;
     }
-    
+
 
     public Theatre_POJO getTheatre()
     {
