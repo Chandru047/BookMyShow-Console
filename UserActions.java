@@ -34,7 +34,7 @@ public class UserActions
 
     }
     // method used for user login
-    User_POJO login(Scanner in, String id)
+    static User_POJO login(Scanner in, String id)
     {
         for (User_POJO user : BookMyShow_POJO.getUserList()) // iterate through the user objects
         {
@@ -72,6 +72,8 @@ static void availableMovies(User_POJO currentUser )
 
     System.out.println("Movies Currently available in your Location: " + location);
 
+    boolean movieFound = false; // boolean to check if any movie is found
+
     for (String movieName : BookMyShow_POJO.getMovieNameObj().keySet()) // for loop to go through the theatre object
     {
         ArrayList<Movie> movies = BookMyShow_POJO.getMovieNameObj().get(movieName); // get the object of the movie in arraylist
@@ -86,10 +88,17 @@ static void availableMovies(User_POJO currentUser )
                 if (currentDate.equals(movieDate)) // if the date matches
                 {
                     System.out.println(" - " + movie.getMovieName()); // display the movie name
+                    movieFound = true; // Set boolean to true if a movie is found
                 }
             }
         }
     }
+    if (!movieFound)
+    {
+        System.out.println("No movies available in your location on the current date.");
+        return;
+    }
+
     System.out.println("-------------------------------");
 
     System.out.println("Would you like to  change the (Date or Location) (Y/N) :"); // prompt the user to change date or location
@@ -254,7 +263,7 @@ static void bookTicket(User_POJO currentUser , ArrayList<Movie> movies)
         }
         else // if not null
         {
-            System.out.println("Screen Name : "+currentShow.getScreen().getScreenName());// display the Screen Name
+            System.out.println("Screen Name : "+currentShow.getScreen().getScreenName());// display the Screen Name2
             System.out.println("No of  Seats : "+currentShow.getScreen().getNoOfSeats()); // display the no of seats
             var seatsAndGrids = currentShow.getSeatingArrangement(); // store the seatingArrangement of the show in a variable
             System.out.println("            ----------------- Seating arrangement ---------------           ");
@@ -320,12 +329,18 @@ static void viewTicket(User_POJO currentUser)
             char row = seat.charAt(0); // Extract the row from the seat input
             int seatNumber = Integer.parseInt(seat.substring(1)); // Extract the seat number (index-matching)
 
+
             String[] grid = currentShow.getScreen().getGrid().split("\\*"); // Parse the grid pattern
             int sum = 0;
 
             for (String grids : grid)
             {
                 sum += Integer.parseInt(grids); // Calculate the sum of the grid
+            }
+            if (seatNumber > sum || seatNumber <= 0)
+            {
+                System.out.println("Enter a valid Seat");
+                continue;
             }
 
             String selectedSeat;
@@ -368,11 +383,7 @@ static void viewTicket(User_POJO currentUser)
         String choice = in.nextLine();
         if (choice.equalsIgnoreCase("Y")) {
             // Finalize the booking by updating the original seating arrangement
-            for (var entry : duplicateGrid.entrySet()) {
-                char rowKey = entry.getKey();
-                ArrayList<String> updatedRow = entry.getValue();
-                currentShow.getSeatingArrangement().put(rowKey, updatedRow);
-            }
+            currentShow.setSeatingArrangement(duplicateGrid) ;
             System.out.println("Tickets have been successfully booked.");
         } else {
             System.out.println("Booking has been canceled.");

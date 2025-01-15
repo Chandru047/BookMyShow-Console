@@ -6,7 +6,6 @@ public class Admin_POJO
 
     // Getters and Setters
 
-
     static double getPIN()
     {
         return PIN;

@@ -268,7 +268,6 @@ public class AdminActions
             }
         }
 
-
         System.out.println("Enter the  Screen count :");
         int screenCount = Integer.parseInt(in.nextLine()); // get the number of screens as input
         HashMap<String,ScreenPOJO> screensHashMap = new HashMap<>(); // HashMap with Name of the Screen as Key , ScreenPojo
@@ -276,7 +275,12 @@ public class AdminActions
         {
             System.out.println("Enter the name of the Screen ");
             String screenName = in.nextLine(); // get the name of the screen as input
-            System.out.println("Enter the number of Seats in Screen " + screenName);
+            if (screensHashMap.containsKey(screenName))
+            {
+                System.out.println("Screen Already Exist !");
+                continue;
+            }
+                System.out.println("Enter the number of Seats in Screen " + screenName);
             long numberSeats =Long.parseLong(in.nextLine()); // get the number of seats as an input
             System.out.println("Enter the Screen Grid (eg:2*8*2)");
             String screenGrid = in.nextLine(); // get the grid layout as an input

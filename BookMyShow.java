@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class BookMyShow
 {
     static Scanner in = new Scanner(System.in);
-    void start() // start method to start the Application
+    static void start() // start method to start the Application
     {
         System.out.println("----------------------------------------");
         System.out.println("-        Welcome to BookMyShow         -");

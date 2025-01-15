@@ -5,9 +5,11 @@ import java.util.HashSet;
 public class ScreenPOJO
 {
     private String screenName; // variable to store the name of the screen
-    private long noOfSeats;// variable to store the no of seats
-    private HashMap<Character , ArrayList<String>> seatingArrangement ; // Hashmap to store the seating Arrangement
     private String grid;
+
+    private long noOfSeats;// variable to store the no of seats
+
+    private HashMap<Character , ArrayList<String>> seatingArrangement ; // Hashmap to store the seating Arrangement
     private HashSet<Show_POJO> shows = new HashSet<>(); // Hashset to store the show objects
 
     //Constructor
@@ -40,16 +42,9 @@ public class ScreenPOJO
         return shows;
     }
 
-    public void setShows(HashSet<Show_POJO> shows) {
-        this.shows = shows;
-    }
-
     public String getGrid()
     {
         return grid;
     }
 
-    public void setGrid(String grid) {
-        this.grid = grid;
-    }
 }

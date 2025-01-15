@@ -37,7 +37,6 @@ public class Movie {
         return location;
     }
 
-
     public Theatre_POJO getTheatre()
     {
         return theatre;
@@ -48,8 +47,4 @@ public class Movie {
         return show;
     }
 
-    public ScreenPOJO getScreen()
-      {
-        return screen;
-    }
 }

@@ -8,8 +8,10 @@ public class Tickets
     private String screenName;// String variable to store the screen Name
     private String location;// String variable to store the theatre location
     private LocalTime startTime;// String variable to store the start time of the movie
-    private ArrayList<String> seats; // arrayList of seats to store the booked Seats
+
     private  long price; // long variable to store the total cost
+
+    private ArrayList<String> seats; // arrayList of seats to store the booked Seats
 
     //Constructor
     public Tickets(String theatreName, String movieName, String screenName, String location, LocalTime startTime, ArrayList<String> seats , long price) {
@@ -46,7 +48,6 @@ public class Tickets
     public ArrayList<String> getSeats() {
         return seats;
     }
-
 
     public long getPrice() {
         return price;

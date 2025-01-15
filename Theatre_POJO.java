@@ -5,6 +5,7 @@ public class Theatre_POJO
 {
     private String theatreName;// String variable to store the theatre Name
     private String location;// String variable to store the theatre location
+
     private HashMap<String , ScreenPOJO > screenNameObj; // //Hashmap to store the screen name and its object
 
     //Constructor
@@ -22,26 +23,13 @@ public class Theatre_POJO
         return theatreName;
     }
 
-    public void setTheatreName(String theatreName)
-    {
-        this.theatreName = theatreName;
-    }
-
     public String getTheatreLocation()
     {
         return location;
-    }
-
-    public void setTheatreLocation(String location)
-    {
-        this.location = location;
     }
 
     public HashMap<String,ScreenPOJO> getScreenNameObj() {
         return screenNameObj;
     }
 
-    public void setScreenNameObj(HashMap<String,ScreenPOJO> screenNameObj) {
-        this.screenNameObj = screenNameObj;
-    }
 }

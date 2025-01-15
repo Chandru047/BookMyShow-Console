@@ -8,9 +8,13 @@ public class Show_POJO
 {
     private LocalTime startTime; // variable to store the startTime of the show
     private LocalTime endTime;// variable to store the endTime of the show
+
     private LocalDate date;// variable to store the date of the show
+
     private ScreenPOJO screen;// variable to store the screen object
+
     private  long price; // variable to store the price of show(ticket)
+
     private  HashMap<Character, ArrayList<String>> seat;// Hashmap to store the seatingArrangment
 
     //Constructor
@@ -67,15 +71,15 @@ public class Show_POJO
         return screen;
     }
 
-    public void setScreen(ScreenPOJO screen) {
-        this.screen = screen;
-    }
-
     public long getPrice() {
         return price;
     }
 
     public HashMap<Character, ArrayList<String>> getSeatingArrangement() {
         return seat;
+    }
+    public void setSeatingArrangement(HashMap<Character, ArrayList<String>> seat)
+    {
+        this.seat = seat ;
     }
 }

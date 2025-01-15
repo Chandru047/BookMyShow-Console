@@ -30,7 +30,7 @@ public class Utilities
                         row.add(" _ "); // _ represents seats add it as string
                     }
                     // Add space between seat groups
-                    if (i < screenGrid.length() - 1) // spaces after each column
+                    if (i < screenGridSplit.length - 1) // spaces after each column
                     {
                         row.add("<SPACE>"); // add space
                     }
