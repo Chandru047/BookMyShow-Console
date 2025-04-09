@@ -3,7 +3,7 @@
 [![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://www.java.com)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg?style=for-the-badge)](https://github.com/username/theater-booking)
 
-> A comprehensive Java project for theater management and booking operations, built for deep understanding of Java concepts and OOP principles.
+> A comprehensive Java project for theater management and booking operations, built for deep understanding of Java concepts and OOP principles
 
 ## 📑 Table of Contents
 - [Project Purpose](#-project-purpose)
