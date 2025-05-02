@@ -42,7 +42,7 @@ public class AdminActions
                 }
             }
 
-            else // if id does not exist then procedure to create a new admin account
+            else // if id does not exist then procedure to create a new admin account.
             {
                 System.out.println("ID does not exist. Creating a new account...");
                 int enteredPin = 0; // set a initial value for the enteredPin variable
