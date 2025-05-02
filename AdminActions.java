@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class AdminActions
 {
-    static Scanner in = new Scanner(System.in); //static Scanner
+    static Scanner in = new Scanner(System.in); //static Scanner for Input
     Admin_POJO login(Scanner in, String id)
     {
         while (true) // infinite loop for admin Login
