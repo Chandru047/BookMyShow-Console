@@ -82,7 +82,7 @@ public class AdminActions
     static void addMovie() {
         main : while (true) {
             System.out.println("Enter the Movie name");
-            String movieName = in.nextLine(); // get the name of the movie to add
+            String movieName = in.nextLine(); // get the name of the movie to add.
 
             System.out.println("Enter the Location of the Movie");
             String location = in.nextLine(); // get the location to add the movie
