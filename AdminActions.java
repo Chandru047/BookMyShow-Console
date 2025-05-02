@@ -18,7 +18,7 @@ public class AdminActions
             {
                 if (BookMyShow_POJO.getAdminList().get(i).getId().equals(id))
                 {
-                    index = i; // if a user is found with a same id then change the index value
+                    index = i; // if a user is found with a same id then change the index value .
                     break;
                 }
             }
